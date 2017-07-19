@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\UsersRequest;
 use App\Http\Requests\UsersEditRequest;
 
@@ -51,8 +52,8 @@ class AdminUsersController extends Controller
         }else{
             
             $input = $request->all();
-            $input['password'] = bcrypt($request->password);
-        }        
+            // $input['password'] = bcrypt($request->password);
+        }
         
         // both below are working
         // if($file = $request->file('photo_id')){
@@ -116,7 +117,7 @@ class AdminUsersController extends Controller
         }else{
             
             $input = $request->all();
-            $input['password'] = bcrypt($request->password);
+            // $input['password'] = bcrypt($request->password);
         }   
 
         $user = User::findOrFail($id);
@@ -147,7 +148,19 @@ class AdminUsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // return 'DESTROY';
+
+        $user = User::findOrFail($id);
+
+        // remove the file at public/images/filename and record in photos table
+        unlink(public_path().$user->photo->file);
+        Photo::findOrFail($user->photo_id)->delete();
+        
+        Session::flash('deleted_user',$user->name);
+
+        $user->delete();
+
+        return redirect('/admin/users');
     }
 
 }

@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,5 +26,16 @@ Route::get('/admin', function(){
 
 });
 
-Route::name('admin')->resource('admin/users', 'AdminUsersController');
+Route::group(['middleware'=>'admin'], function(){
+
+	Route::name('admin')->resource('admin/users', 'AdminUsersController');
+});
+
+//test logged user data
+Route::get('/admin/test', function() {
+    
+    return Auth::user()->isAdmin();
+});
+
+
 
