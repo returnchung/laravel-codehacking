@@ -29,6 +29,7 @@ Route::get('/admin', function(){
 Route::group(['middleware'=>'admin'], function(){
 
 	Route::name('admin')->resource('admin/users', 'AdminUsersController');
+	Route::name('admin')->resource('admin/posts', 'AdminPostsController');
 });
 
 //test logged user data
