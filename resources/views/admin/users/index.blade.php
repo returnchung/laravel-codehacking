@@ -4,7 +4,7 @@
 	
 	@if (Session::has('deleted_user'))
 		
-		<p class="bg-danger">{{session('deleted_user').' has been deleted.'}}</p>
+		<p class="bg-danger">{{'\''.session('deleted_user').'\''.' has been deleted.'}}</p>
 	@endif
 
 	<h1>Users</h1>

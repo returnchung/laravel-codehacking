@@ -29,8 +29,6 @@
 		        {!! Form::submit('Create Post',['class'=>'btn btn-primary']) !!}
 		    </div>
 
-			@include('includes.form_error')
-
 		{!! Form::close() !!}
 
 	</div>
