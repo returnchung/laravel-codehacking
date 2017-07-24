@@ -31,6 +31,13 @@ Route::group(['middleware'=>'admin'], function(){
 	Route::name('admin')->resource('admin/users', 'AdminUsersController');
 	Route::name('admin')->resource('admin/posts', 'AdminPostsController');
 	Route::name('admin')->resource('admin/categories', 'AdminCategoriesController');
+	Route::name('admin')->resource('admin/medias', 'AdminMediasController');
+
+	// customized admin.medias.upload if you want
+	// route::name('admin.medias.upload')->get('/admin/medias/upload', 'AdminMediasController@store');
+	
+	Route::name('admin')->resource('admin/comments', 'PostCommentsController');
+	Route::name('admin')->resource('admin/comment/replies', 'CommentRepliesController');
 });
 
 //test logged user data

@@ -144,6 +144,8 @@ class AdminPostsController extends Controller
 
         Session::flash('deleted_post',$post->title);
 
+        Photo::findOrFail($post->photo_id)->delete();
+
         $post->delete();
 
         return redirect('/admin/posts');
