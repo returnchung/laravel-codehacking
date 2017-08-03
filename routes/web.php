@@ -20,26 +20,34 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/admin', function(){
-
-	return view('admin.index');
-
-});
+Route::name('home.post')->get('/post/{id}', 'AdminPostsController@post');
 
 Route::group(['middleware'=>'admin'], function(){
 
-	Route::name('admin')->resource('admin/users', 'AdminUsersController');
-	Route::name('admin')->resource('admin/posts', 'AdminPostsController');
-	Route::name('admin')->resource('admin/categories', 'AdminCategoriesController');
-	Route::name('admin')->resource('admin/medias', 'AdminMediasController');
+	Route::get('/admin', function(){
+
+		return view('admin.index');
+
+	});
+
+	Route::name('admin')->resource('/admin/users', 'AdminUsersController');
+	Route::name('admin')->resource('/admin/posts', 'AdminPostsController');
+	Route::name('admin')->resource('/admin/categories', 'AdminCategoriesController');
+	Route::name('admin')->resource('/admin/medias', 'AdminMediasController');
 
 	// customized admin.medias.upload if you want
 	// route::name('admin.medias.upload')->get('/admin/medias/upload', 'AdminMediasController@store');
 	
-	Route::name('admin')->resource('admin/comments', 'PostCommentsController');
-	Route::name('admin')->resource('admin/comment/replies', 'CommentRepliesController');
+	Route::name('admin')->resource('/admin/comments', 'PostCommentsController');
+	Route::name('admin.comment')->resource('/admin/comment/replies', 'CommentRepliesController');
 });
 
+
+Route::group(['middleware'=>'auth'], function(){
+
+	Route::post('/comment/replies', 'CommentRepliesController@createReply');
+
+});
 //test logged user data
 Route::get('/admin/test', function() {
     

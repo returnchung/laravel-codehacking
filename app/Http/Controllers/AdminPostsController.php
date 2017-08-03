@@ -25,8 +25,11 @@ class AdminPostsController extends Controller
      */
     public function index()
     {
-        //
-        $posts = Post::all();
+        // get all 
+        // $posts = Post::all();
+        // 
+        // pagination
+        $posts = Post::paginate(3);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -68,7 +71,7 @@ class AdminPostsController extends Controller
 
         }
 
-        $user->post()->create($input);
+        $user->posts()->create($input);
 
         return redirect('admin/posts');
 
@@ -124,7 +127,7 @@ class AdminPostsController extends Controller
 
         }
 
-        Auth::user()->post()->whereId($id)->first()->update($input);
+        Auth::user()->posts()->whereId($id)->first()->update($input);
 
         return redirect('admin/posts');
     }
@@ -150,4 +153,18 @@ class AdminPostsController extends Controller
 
         return redirect('/admin/posts');
     }
+
+    public function post ($slug){
+
+        // return $slug;
+
+        $post = Post::where('slug',$slug)->firstOrFail();
+        
+        $comments = $post->comments()->whereIsActive(1)->get();
+
+        return view('post',compact('post','comments'));
+    }
+
+
+
 }
