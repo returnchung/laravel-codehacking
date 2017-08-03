@@ -36,8 +36,10 @@ Route::group(['middleware'=>'admin'], function(){
 	Route::name('admin')->resource('/admin/medias', 'AdminMediasController');
 
 	// customized admin.medias.upload if you want
-	// route::name('admin.medias.upload')->get('/admin/medias/upload', 'AdminMediasController@store');
-	
+	// Route::name('admin.medias.upload')->get('/admin/medias/upload', 'AdminMediasController@store');
+	// customized multi-medias delete
+	Route::delete('/admin/delete/medias', 'AdminMediasController@deleteMedias');
+
 	Route::name('admin')->resource('/admin/comments', 'PostCommentsController');
 	Route::name('admin.comment')->resource('/admin/comment/replies', 'CommentRepliesController');
 });
@@ -54,5 +56,8 @@ Route::get('/admin/test', function() {
     return Auth::user()->isAdmin();
 });
 
+Route::get('testurl', function (){
 
+	return url('/');
+});
 
